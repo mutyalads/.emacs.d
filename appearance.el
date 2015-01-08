@@ -25,7 +25,7 @@
 (defun use-default-theme ()
   (interactive)
   (disable-theme 'prez)
-  (load-theme 'solarized-dark)
+  (load-theme 'default-black)
   (when (boundp 'thomsten/default-font)
     (set-face-attribute 'default nil :font thomsten/default-font)))
 

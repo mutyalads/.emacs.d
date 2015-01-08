@@ -67,7 +67,9 @@
      git-commit-mode
      gitconfig-mode
      gitignore-mode
-     auctex)))
+     auctex
+     solarized-theme
+     )))
 
 (condition-case nil
     (init--install-packages)
