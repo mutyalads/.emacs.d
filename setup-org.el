@@ -1,6 +1,10 @@
 ;; This org-mode setup is a mish-mash of a lot of stuff. Mostly inpsired by:
 ;; http://doc.norang.ca/org-mode.html
 
+(require 'org)
+
+(add-hook 'org-mode-hook 'turn-on-flyspell 'append)
+
 (defun myorg-update-parent-cookie ()
   (when (equal major-mode 'org-mode)
     (save-excursion
@@ -14,10 +18,13 @@
 (defadvice kill-whole-line (after fix-cookies activate)
   (myorg-update-parent-cookie))
 
-(require 'org)
+
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
 (setq org-log-done t)
+
+(setq org-startup-indented 1)
+
 
 (setq org-directory "~/Dropbox/org")
 (setq org-default-notes-file (concat org-directory "/notes.org"))
