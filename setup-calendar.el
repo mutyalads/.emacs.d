@@ -32,7 +32,5 @@
    :contents-sources
    (list
     (cfw:org-create-source "Green")  ; orgmode source
-    (cfw:ical-create-source "felles" "https://www.google.com/calendar/ical/d8s5kd20iv8ehds8rf5isjditc%40group.calendar.google.com/private-7064cee3f8b79e90adc88b899dd1fab1/basic.ics" "Gray")  ; Felles ICS
-    (cfw:ical-create-source "gcal" "https://www.google.com/calendar/ical/stenersen.thomas%40gmail.com/private-ffe1804bf4bfbd65a23d463f41453409/basic.ics" "IndianRed") ; google calendar ICS
     )))
 (provide 'setup-calendar)

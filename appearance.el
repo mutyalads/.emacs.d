@@ -19,14 +19,14 @@
   (interactive)
   (disable-theme 'default-black)
   (load-theme 'prez)
-  (when (boundp 'magnars/presentation-font)
+  (when (boundp 'thomsten/presentation-font)
     (set-face-attribute 'default nil :font thomsten/presentation-font)))
 
 (defun use-default-theme ()
   (interactive)
   (disable-theme 'prez)
-  (load-theme 'default-black)
-  (when (boundp 'magnars/default-font)
+  (load-theme 'solarized-dark)
+  (when (boundp 'thomsten/default-font)
     (set-face-attribute 'default nil :font thomsten/default-font)))
 
 (defun toggle-presentation-mode ()

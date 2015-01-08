@@ -187,6 +187,10 @@
 (unless (server-running-p)
   (server-start))
 
+
+;; Setup Calendar
+(require 'setup-calendar)
+
 ;; Run at full power please
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
