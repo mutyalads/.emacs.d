@@ -72,6 +72,7 @@
      gitignore-mode
      auctex
      solarized-theme
+     org-plus-contrib
      )))
 
 (condition-case nil

@@ -1,7 +1,11 @@
 ;; This org-mode setup is a mish-mash of a lot of stuff. Mostly inpsired by:
 ;; http://doc.norang.ca/org-mode.html
-
 (require 'org)
+
+;; Setup taskjuggler export
+(require 'ox-taskjuggler)
+(setq org-taskjuggler-target-version 3.5)
+
 
 (add-hook 'org-mode-hook 'turn-on-flyspell 'append)
 
