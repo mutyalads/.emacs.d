@@ -8,6 +8,7 @@
 
 
 (add-hook 'org-mode-hook 'turn-on-flyspell 'append)
+(add-hook 'org-mode-hook 'turn-on-visual-line-mode 'append)
 
 (defun myorg-update-parent-cookie ()
   (when (equal major-mode 'org-mode)
