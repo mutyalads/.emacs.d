@@ -8,7 +8,10 @@
 
 
 (add-hook 'org-mode-hook 'turn-on-flyspell 'append)
-(add-hook 'org-mode-hook 'turn-on-visual-line-mode 'append)
+(add-hook 'org-mode-hook 'visual-line-mode 'append)
+
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "firefox")
 
 (defun myorg-update-parent-cookie ()
   (when (equal major-mode 'org-mode)
