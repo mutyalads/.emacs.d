@@ -2,6 +2,13 @@
 ;; http://doc.norang.ca/org-mode.html
 (require 'org)
 
+
+;; Test github sync
+(mapc 'load
+      '("org-element" "os" "os-bb" "os-github" "os-rmine"))
+
+
+
 ;; Setup taskjuggler export
 (require 'ox-taskjuggler)
 (setq org-taskjuggler-target-version 3.5)
@@ -12,6 +19,13 @@
 
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "firefox")
+
+(setq org-latex-listings t)
+
+(setq org-latex-pdf-process
+      '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 
 (defun myorg-update-parent-cookie ()
   (when (equal major-mode 'org-mode)

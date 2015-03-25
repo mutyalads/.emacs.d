@@ -89,5 +89,7 @@
 
 (add-to-list 'auto-mode-alist '("\\.tikz\\'" . LaTeX-mode))
 
+;; launch files (ROS)
+(add-to-list 'auto-mode-alist '("\\.launch$" . xml-mode))
 
 (provide 'mode-mappings)
