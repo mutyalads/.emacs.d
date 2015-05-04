@@ -92,4 +92,7 @@
 ;; launch files (ROS)
 (add-to-list 'auto-mode-alist '("\\.launch$" . xml-mode))
 
+;; Arduino
+(add-to-list 'auto-mode-alist '("\\.ino$" . c++-mode))
+
 (provide 'mode-mappings)
