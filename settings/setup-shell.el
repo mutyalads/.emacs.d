@@ -38,12 +38,16 @@
 (require 'cygwin-mount)
 (cygwin-mount-activate)
 
+;(require 'setup-cygwin)
+
+
 (add-hook 'comint-output-filter-functions
           'shell-strip-ctrl-m nil t)
 (add-hook 'comint-output-filter-functions
           'comint-watch-for-password-prompt nil t)
 (setq explicit-shell-file-name "bash.exe")
 (setq shell-file-name explicit-shell-file-name)
+(setq shell-command-switch "-c")
 
 
 ;; (when (or (eq system-type 'windows-nt) (eq system-type 'msdos))

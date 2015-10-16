@@ -1,7 +1,8 @@
 (require 'cc-mode)
 
-(set-default c-default-style "linux"
-              c-basic-offset 4)
+(setq c-default-style "linux")
+(setq-default c-basic-offset 2)
+(c-set-offset 'case-label '+)
 
 (define-key c-mode-map  [(control tab)] 'company-complete)
 (define-key c++-mode-map  [(control tab)] 'company-complete)
@@ -12,5 +13,6 @@
 ;; hs-minor-mode for folding source code
 (add-hook 'c-mode-common-hook 'hs-minor-mode)
 
+(require 'cmake-project)
 
 (provide 'setup-cc-mode)

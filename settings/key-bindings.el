@@ -5,6 +5,8 @@
 
 (define-key key-translation-map [dead-tilde] "~")
 
+;(global-set-key (kbd ))
+
 ;; Completion that uses many different methods to find options.
 (global-set-key (kbd "C-.") 'hippie-expand-no-case-fold)
 (global-set-key (kbd "C-:") 'hippie-expand-lines)
@@ -247,6 +249,8 @@
 (global-set-key (kbd "<s-left>") 'windmove-left)
 (global-set-key (kbd "<s-up>") 'windmove-up)
 (global-set-key (kbd "<s-down>") 'windmove-down)
+
+(global-set-key (kbd "<pause>") 'thomsten/clock-business-time)
 
 ;; Magit
 (global-set-key (kbd "C-x m") 'magit-status)

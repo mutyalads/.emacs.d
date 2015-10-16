@@ -1,3 +1,7 @@
+;; Speed up on Windows! Pretty please!
+;; http://stackoverflow.com/questions/2007329/emacs-23-1-50-1-hangs-ramdomly-for-6-8-seconds-on-windows-xp
+(setq w32-get-true-file-attributes nil)
+
 ;; Turn off mouse interface early in startup to avoid momentary display
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
@@ -54,7 +58,14 @@
 ;; Install extensions if they're missing
 (defun init--install-packages ()
   (packages-install
-   '(magit
+   '(anzu
+     company
+     helm
+     helm-gtags
+     helm-projectile
+     helm-swoop
+     projectile
+     magit
      paredit
      move-text
      gist
@@ -69,7 +80,7 @@
      guide-key
      highlight-escape-sequences
      whitespace-cleanup-mode
-     git-commit-mode
+;     git-commit-mode
      gitconfig-mode
      gitignore-mode
      auctex
@@ -125,7 +136,8 @@
           markdown-mode
           groovy-mode
 	  LaTeX-mode-hook
-	  python-mode)
+	  python-mode
+          )
   (add-hook it 'turn-on-smartparens-mode))
 
 ;; Language specific setup files
@@ -185,6 +197,30 @@
 (require 'project-archetypes)
 (require 'my-misc)
 (when is-mac (require 'mac))
+
+(require 'setup-helm)
+(require 'setup-helm-gtags)
+;; (require 'setup-ggtags)
+(require 'setup-cedet)
+
+;; company
+(require 'company)
+(add-hook 'after-init-hook 'global-company-mode)
+(delete 'company-semantic company-backends)
+;; (define-key c-mode-map  [(tab)] 'company-complete)
+;; (define-key c++-mode-map  [(tab)] 'company-complete)
+
+;; Package: projejctile
+(require 'projectile)
+(projectile-global-mode)
+(setq projectile-enable-caching t)
+
+(require 'helm-projectile)
+(helm-projectile-on)
+(setq projectile-completion-system 'helm)
+(setq projectile-indexing-method 'alien)
+
+
 
 ;; Elisp go-to-definition with M-. and back again with M-,
 ;(autoload 'elisp-slime-nav-mode "elisp-slime-nav")

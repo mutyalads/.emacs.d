@@ -8,6 +8,7 @@
 
 ;; Set custom theme path
 (setq custom-theme-directory (concat user-emacs-directory "themes"))
+(setq thomsten/default-font "-outline-Consolas-normal-normal-normal-mono-13-*-*-*-c-*-iso8859-1")
 
 (dolist
     (path (directory-files custom-theme-directory t "\\w+"))
@@ -26,6 +27,13 @@
   (interactive)
   (disable-theme 'prez)
   (load-theme 'default-black)
+  (when (boundp 'thomsten/default-font)
+    (set-face-attribute 'default nil :font thomsten/default-font)))
+
+(defun use-light-theme ()
+  (interactive)
+  (disable-theme 'default-black)
+  (load-theme 'leuven)
   (when (boundp 'thomsten/default-font)
     (set-face-attribute 'default nil :font thomsten/default-font)))
 
