@@ -41,7 +41,7 @@
 (setq org-startup-indented 1)
 
 
-(setq org-directory "~/org")
+(setq org-directory "~/devel/mesh/org")
 (setq org-default-notes-file (concat org-directory "/notes.org"))
 (define-key global-map (kbd "C-c h") 'org-capture) ; "org husk"
 
@@ -69,7 +69,7 @@
   (interactive)
   (save-excursion
     (beginning-of-line 0)
-    (org-remove-empty-drawer-at "" (point))))
+    (org-remove-empty-drawer-at (point))))
 
 (add-hook 'org-clock-out-hook 'bh/remove-empty-drawer-on-clock-out 'append)
 
@@ -96,26 +96,6 @@
               ("NEXT" ("WAITING") ("CANCELLED") ("HOLD"))
               ("DONE" ("WAITING") ("CANCELLED") ("HOLD")))))
 
-(setq org-agenda-files (list "~/org/"))
-
-(setq thomsten/business-time nil)
-
-(defun thomsten/clock-business-time ()
-  (if thomsten/business-time
-      (thomsten/start-business-clock)
-    (thomsten/stop-business-clock)))
-
-(defun thomsten/start-business-clock ()
-  (org-clock-c)
-  (setq thomsten/business-time t)
-  (switch-to-buffer "task.org")
-  (search-forward "Business time")
-  (org-clock-in))
-
-(defun thomsten/start-business-clock ()
-  (setq thomsten/business-time nil)
-  (switch-to-buffer "task.org")
-  (search-forward "Business time")
-  (org-clock-out))
+(setq org-agenda-files (list "~/devel/mesh/org/"))
 
 (provide 'setup-org)

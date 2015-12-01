@@ -207,8 +207,8 @@
 (require 'company)
 (add-hook 'after-init-hook 'global-company-mode)
 (delete 'company-semantic company-backends)
-;; (define-key c-mode-map  [(tab)] 'company-complete)
-;; (define-key c++-mode-map  [(tab)] 'company-complete)
+
+(require 'setup-cc-mode)
 
 ;; Package: projejctile
 (require 'projectile)
@@ -221,7 +221,8 @@
 (setq projectile-indexing-method 'alien)
 
 
-
+(add-hook 'term-mode-hook (lambda ()
+                            (setq yas-dont-activate t)))
 ;; Elisp go-to-definition with M-. and back again with M-,
 ;(autoload 'elisp-slime-nav-mode "elisp-slime-nav")
 ;(add-hook 'emacs-lisp-mode-hook (lambda () (elisp-slime-nav-mode t) (eldoc-mode 1)))

@@ -8,32 +8,66 @@
 
 ;; Set custom theme path
 (setq custom-theme-directory (concat user-emacs-directory "themes"))
-(setq thomsten/default-font "-outline-Consolas-normal-normal-normal-mono-13-*-*-*-c-*-iso8859-1")
+
+(if (eq system-type 'windows-nt)
+    (setq thomsten/default-font "-outline-Consolas-normal-normal-normal-mono-13-*-*-*-m-0-iso8859-1"))
+
+(when (eq system-type 'gnu/linux)
+    (setq thomsten/presentation-font "-unknown-Ubuntu Mono-normal-normal-normal-*-22-*-*-*-*-*-iso8859-1")
+    (setq thomsten/default-font "-unknown-Ubuntu Mono-normal-normal-normal-*-13-*-*-*-*-*-iso8859-1")
+    )
 
 (dolist
     (path (directory-files custom-theme-directory t "\\w+"))
   (when (file-directory-p path)
     (add-to-list 'custom-theme-load-path path)))
 
+(setq thomsten/current-theme nil)
+
+;(set-face-attribute 'default nil :font thomsten/default-font)
+
 ;; Default theme
 (defun use-presentation-theme ()
   (interactive)
-  (disable-theme 'default-black)
-  (load-theme 'prez)
+  (disable-theme thomsten/current-theme)
+  (load-theme 'leuven)
+  (setq thomsten/current-theme 'leuven)
   (when (boundp 'thomsten/presentation-font)
     (set-face-attribute 'default nil :font thomsten/presentation-font)))
 
 (defun use-default-theme ()
   (interactive)
-  (disable-theme 'prez)
+  (use-light-theme))
+
+(defun use-default-black-theme ()
+  (interactive)
+  (disable-theme thomsten/current-theme)
   (load-theme 'default-black)
+  (setq thomsten/current-theme 'default-black)
   (when (boundp 'thomsten/default-font)
     (set-face-attribute 'default nil :font thomsten/default-font)))
 
 (defun use-light-theme ()
   (interactive)
-  (disable-theme 'default-black)
+  (disable-theme thomsten/current-theme)
   (load-theme 'leuven)
+  (setq thomsten/current-theme 'leuven)
+  (when (boundp 'thomsten/default-font)
+    (set-face-attribute 'default nil :font thomsten/default-font)))
+
+(defun use-zen-theme ()
+  (interactive)
+  (disable-theme thomsten/current-theme)
+  (load-theme 'zenburn)
+  (setq thomsten/current-theme 'zenburn)
+  (when (boundp 'thomsten/default-font)
+    (set-face-attribute 'default nil :font thomsten/default-font)))
+
+(defun use-seti-theme ()
+  (interactive)
+  (disable-theme thomsten/current-theme)
+  (load-theme 'seti)
+  (setq thomsten/current-theme 'seti)
   (when (boundp 'thomsten/default-font)
     (set-face-attribute 'default nil :font thomsten/default-font)))
 
@@ -75,5 +109,31 @@
   `(eval-after-load ,package-name
      '(defadvice ,mode (after rename-modeline activate)
         (setq mode-name ,new-name))))
+
+
+(defun thomsten/fci-enabled-p () (symbol-value 'fci-mode))
+
+(defvar thomsten/fci-mode-suppressed nil)
+(make-variable-buffer-local 'thomsten/fci-mode-suppressed)
+
+(defadvice popup-create (before suppress-fci-mode activate)
+  "Suspend fci-mode while popups are visible"
+  (let ((fci-enabled (thomsten/fci-enabled-p)))
+    (when fci-enabled
+      (setq thomsten/fci-mode-suppressed fci-enabled)
+      (turn-off-fci-mode))))
+
+(defadvice popup-delete (after restore-fci-mode activate)
+  "Restore fci-mode when all popups have closed"
+  (when (and thomsten/fci-mode-suppressed
+             (null popup-instances))
+    (setq thomsten/fci-mode-suppressed nil)
+    (turn-on-fci-mode)))
+
+(defun split-in-three ()
+  (interactive)
+  (split-window-horizontally)
+  (split-window-horizontally)
+  (balance-windows))
 
 (provide 'appearance)

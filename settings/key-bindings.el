@@ -350,4 +350,7 @@
 (define-key occur-mode-map (kbd "n") 'next-line)
 (define-key occur-mode-map (kbd "p") 'previous-line)
 
+
+(global-set-key (kbd "<f5>") 'recompile)
+
 (provide 'key-bindings)
