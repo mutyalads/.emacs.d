@@ -9,8 +9,11 @@
 ;; Set custom theme path
 (setq custom-theme-directory (concat user-emacs-directory "themes"))
 
-(if (eq system-type 'windows-nt)
-    (setq thomsten/default-font "-outline-Consolas-normal-normal-normal-mono-13-*-*-*-m-0-iso8859-1"))
+(when (eq system-type 'windows-nt)
+  (setq thomsten/presentation-font "Consolas-18")
+  ;; (setq thomsten/default-font "-outline-Consolas-normal-normal-normal-*-12-12-*-*-*-*-iso8859-1")
+  (setq thomsten/default-font "Consolas-11")
+  )
 
 (when (eq system-type 'gnu/linux)
     (setq thomsten/presentation-font "-unknown-Ubuntu Mono-normal-normal-normal-*-22-*-*-*-*-*-iso8859-1")
@@ -24,7 +27,7 @@
 
 (setq thomsten/current-theme nil)
 
-;(set-face-attribute 'default nil :font thomsten/default-font)
+;; (set-face-attribute 'default nil :font thomsten/default-font)
 
 ;; Default theme
 (defun use-presentation-theme ()
@@ -37,7 +40,25 @@
 
 (defun use-default-theme ()
   (interactive)
-  (use-light-theme))
+  (use-80s-theme))
+
+(defun use-80s-theme ()
+  (interactive)
+  (disable-theme thomsten/current-theme)
+  (load-theme 'sanityinc-tomorrow-eighties)
+  (setq thomsten/current-theme 'sanityinc-tomorrow-eighties)
+  (when (boundp 'thomsten/default-font)
+    (set-face-attribute 'default nil :font thomsten/default-font)))
+
+(defun use-presentation-font ()
+  (interactive)
+  (when (boundp 'thomsten/presentation-font)
+    (set-face-attribute 'default nil :font thomsten/presentation-font)))
+
+(defun use-default-font ()
+  (interactive)
+  (when (boundp 'thomsten/presentation-font)
+    (set-face-attribute 'default nil :font thomsten/default-font)))
 
 (defun use-default-black-theme ()
   (interactive)
@@ -135,5 +156,16 @@
   (split-window-horizontally)
   (split-window-horizontally)
   (balance-windows))
+
+(defun set-transparency (alpha-level)
+  (interactive "p")
+  (message (format "Alpha level passed in: %s" alpha-level))
+  (let ((alpha-level (if (< alpha-level 2)
+                         (read-number "Opacity percentage: " 85)
+                       alpha-level))
+        (myalpha (frame-parameter nil 'alpha)))
+    (set-frame-parameter nil 'alpha alpha-level))
+  (message (format "Alpha level is %d" (frame-parameter nil 'alpha))))
+
 
 (provide 'appearance)
