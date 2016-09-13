@@ -7,7 +7,10 @@
 ;; You may delete these explanatory comments.
 (package-initialize)
 
-(setq w32-get-true-file-attributes nil)
+(when (eq system-type 'windows-nt)
+  (setq w32-pipe-read-delay 0)
+  (setq w32-get-true-file-attributes nil)
+  )
 
 ;; Turn off mouse interface early in startup to avoid momentary display
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
