@@ -1,5 +1,12 @@
 ;; Speed up on Windows! Pretty please!
 ;; http://stackoverflow.com/questions/2007329/emacs-23-1-50-1-hangs-ramdomly-for-6-8-seconds-on-windows-xp
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
 (setq w32-get-true-file-attributes nil)
 
 ;; Turn off mouse interface early in startup to avoid momentary display
@@ -103,11 +110,11 @@
   (exec-path-from-shell-initialize))
 
 ;; guide-key
-(require 'guide-key)
-(setq guide-key/guide-key-sequence '("C-x r" "C-x 4" "C-x v" "C-x 8" "C-x +"))
-(guide-key-mode 1)
-(setq guide-key/recursive-key-sequence-flag t)
-(setq guide-key/popup-window-position 'bottom)
+;; (require 'guide-key)
+;; (setq guide-key/guide-key-sequence '("C-x r" "C-x 4" "C-x v" "C-x 8" "C-x +"))
+;; (guide-key-mode 1)
+;; (setq guide-key/recursive-key-sequence-flag t)
+;; (setq guide-key/popup-window-position 'bottom)
 
 ;; Setup extensions
 (eval-after-load 'ido '(require 'setup-ido))
@@ -118,8 +125,8 @@
 (eval-after-load 'shell '(require 'setup-shell))
 
 (require 'setup-yasnippet)
-(require 'setup-perspective)
-(require 'setup-paredit)
+;; (require 'setup-perspective)
+;; (require 'setup-paredit)
 (require 'setup-ffip)
 
 ;; Font lock dash.el
@@ -137,6 +144,7 @@
           groovy-mode
 	  LaTeX-mode-hook
 	  python-mode
+          c-mode
           )
   (add-hook it 'turn-on-smartparens-mode))
 
@@ -146,8 +154,8 @@
 (eval-after-load 'LaTeX-mode '(require 'setup-latex-mode))
 
 ;; Load stuff on demand
-(autoload 'flycheck-mode "setup-flycheck" nil t)
-(autoload 'auto-complete-mode "auto-complete" nil t)
+;; (autoload 'flycheck-mode "setup-flycheck" nil t)
+;; (autoload 'auto-complete-mode "auto-complete" nil t)
 
 ;; Map files to modes
 (require 'mode-mappings)
@@ -197,16 +205,21 @@
 (require 'project-archetypes)
 (require 'my-misc)
 (when is-mac (require 'mac))
+;;(when (eq system-type 'windows-nt) (require 'windows))
 
 (require 'setup-helm)
 (require 'setup-helm-gtags)
-;; (require 'setup-ggtags)
+(require 'setup-ggtags)
 (require 'setup-cedet)
 
 ;; company
 (require 'company)
 (add-hook 'after-init-hook 'global-company-mode)
 (delete 'company-semantic company-backends)
+;; (delete 'company-clang company-backends)
+(eval-after-load 'company '(add-to-list 'company-backends 'company-c-headers))
+;; (eval-after-load 'company '(add-to-list 'company-backends 'company-irony-c-headers))
+;; (eval-after-load 'company '(add-to-list 'company-backends 'company-irony))
 
 (require 'setup-cc-mode)
 
@@ -231,7 +244,6 @@
 (require 'server)
 (unless (server-running-p)
   (server-start))
-
 
 ;; Setup Calendar
 (require 'setup-calendar)
