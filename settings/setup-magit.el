@@ -36,14 +36,10 @@
 ;;     git config --add magit.extension svn
 ;;
 
-;; (if (eq system-type 'windows-nt)
-;;     (progn
-;;       (setq exec-path (add-to-list 'exec-path "C:/Program Files (x86)/Git/bin"))
-;;       (setenv "PATH" (concat "C:\\Program Files (x86)\\Git\\bin;" (getenv "PATH")))))
-;; (setq magit-git-executable "C:\\Program Files (x86)\\Git\\bin\\git.exe")
-;; (if (eq system-type 'windows-nt)
-;;     (progn
-;;       (setq magit-git-executable "C:\\cygwin64\\bin\\git.exe")))
+(when (eq system-type 'windows-nt)
+  (setq exec-path (add-to-list 'exec-path "C:\\Program Files\\Git\\bin"))
+  (setenv "PATH" (concat "C:\\Program Files\\Git\\bin;" (getenv "PATH")))
+  (setq magit-git-executable "C:\\Program Files\\Git\\bin\\git.exe"))
 
 (add-hook 'magit-mode-hook 'magit-load-config-extensions)
 
