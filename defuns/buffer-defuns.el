@@ -31,7 +31,7 @@
              (setq n (1+ n))
              (get-buffer bufname)))
     (switch-to-buffer (get-buffer-create bufname))
-    (emacs-lisp-mode)
+    (org-mode)
     ))
 
 (defun split-window-right-and-move-there-dammit ()
