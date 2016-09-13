@@ -1,6 +1,7 @@
 ;; This org-mode setup is a mish-mash of a lot of stuff. Mostly inpsired by:
 ;; http://doc.norang.ca/org-mode.html
 (require 'org)
+(require 'ox)
 (require 'ox-confluence)
 
 ;; Test github sync
