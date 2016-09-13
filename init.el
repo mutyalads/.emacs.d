@@ -96,6 +96,7 @@
      auctex
      solarized-theme
      org-plus-contrib
+     ido-ubiquitous
      )))
 
 (condition-case nil
