@@ -99,7 +99,7 @@
 (set-default 'sentence-end-double-space nil)
 
 ;; 80 chars is a good width.
-(set-default 'fill-column 80)
+(set-default 'fill-column 100)
 
 ;; Add parts of each file's directory to the buffer name if not unique
 (require 'uniquify)

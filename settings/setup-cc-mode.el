@@ -25,9 +25,9 @@
 ;; (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 
 (setq company-clang-arguments ())
-(add-to-list 'company-clang-arguments "-IC:/Users/ths1/devel/MESH/mesh-btle/mesh/include")
-(add-to-list 'company-clang-arguments "-Ic:/Users/ths1/devel/MESH/mesh-btle/mesh/api")
-(add-to-list 'company-clang-arguments "-Ic:/Users/ths1/devel/MESH/mesh-btle/mesh/models/pb_mesh/include")
+(add-to-list 'company-clang-arguments "-IC:/Users/ths1/devel/MESH/verification/mod/mbtle/mesh/include")
+(add-to-list 'company-clang-arguments "-Ic:/Users/ths1/devel/MESH/verification/mod/mbtle/mesh/api")
+(add-to-list 'company-clang-arguments "-Ic:/Users/ths1/devel/MESH/verification/mod/mbtle/mesh/models/pb_mesh/include")
 (add-to-list 'company-clang-arguments "-Ic:/Users/ths1/devel/SDK/SDK_9.0.0_nrf51/components/device")
 (add-to-list 'company-clang-arguments "-Ic:/Users/ths1/devel/SDK/SDK_9.0.0_nrf51/components/softdevice/s110/headers")
 ;; (setq cmake-ide-build-dir "C:/Users/ths1/devel/MESH/mesh-btle/build")
