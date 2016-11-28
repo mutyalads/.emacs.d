@@ -181,3 +181,18 @@ Both PATTERN and CONTENTS are matched as regular expressions."
   (interactive)
   (kmacro-push-ring)
   (edit-kbd-macro 'view-lossage))
+
+(defun hex-string-to-bytes (hex-string)
+  (interactive
+   (if (use-region-p)
+       (list (buffer-substring (region-beginning) (region-end)))
+     (list (read-string "Hex string: "))))
+  (deactivate-mark)
+  (setq c-hex-string "")
+  (while (> (length hex-string) 0)
+    (setq c-hex-string (concat c-hex-string "0x" (subseq hex-string 0 2) ", "))
+    (setq hex-string (subseq hex-string 2))
+    )
+  (setq c-hex-string (subseq c-hex-string 0 -2))
+  (kill-new c-hex-string)
+  )
