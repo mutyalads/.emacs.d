@@ -1,4 +1,7 @@
-(setq rtt-com-path "c:/Users/ths1/devel/scripts/rtt_com/rtt_com.py")
+(setq rtt-com-path "c:/dev/scripts/rtt_com/rtt_com.py")
+(setq build-folder "C:/dev/mesh/verification/mod/mbtle/build/")
+(setq client-hex "c:/dev/mesh/verification/mod/mbtle/build/examples/pb_mesh_client/51_pb_mesh_client.hex")
+(setq server-hex "c:/dev/mesh/verification/mod/mbtle/build/examples/pb_mesh_server/51_pb_mesh_server.hex")
 
 (defun send-rtt-command (process cmd)
   (process-send-string process cmd))
@@ -27,21 +30,23 @@
          (with-current-buffer buf
            (ansi-color-apply-on-region (point-min) (point-max))))))
 
-(setq build-folder "C:/Users/ths1/devel/MESH/mesh-btle/build/")
-
-(defun start-pb-mesh-client (segger-id)
+(defun start-pb-mesh-client (segger-id  &optional client)
   (interactive)
-  (setq buffer-name (concat "serial.hex:" segger-id))
-  (start-rtt-com buffer-name segger-id (concat build-folder "examples/pb_mesh_client/51_pb_mesh_client.hex"))
+  (setq buffer-name (concat "client.hex:" segger-id))
+  (if client
+      (start-rtt-com buffer-name segger-id client)
+    (start-rtt-com buffer-name segger-id client-hex))
   (setq buffer-name (concat "*" buffer-name "*"))
   (add-to-list 'rtt-com/buffers buffer-name)
   (switch-to-buffer buffer-name)
   )
 
-(defun start-pb-mesh-server (segger-id)
+(defun start-pb-mesh-server (segger-id &optional server)
   (interactive)
-  (setq buffer-name (concat "pb_mesh_server.hex:" segger-id))
-  (start-rtt-com buffer-name segger-id (concat build-folder "examples/pb_mesh_server/51_pb_mesh_server.hex"))
+  (setq buffer-name (concat "server.hex:" segger-id))
+  (if server
+      (start-rtt-com buffer-name segger-id server)
+    (start-rtt-com buffer-name segger-id server-hex))
   (setq buffer-name (concat "*" buffer-name "*"))
   (add-to-list 'rtt-com/buffers buffer-name)
   (switch-to-buffer buffer-name)
@@ -52,28 +57,6 @@
   (send-rtt-command "*PB-MESH-CLIENT*" (concat (read-string "Send RTT command: ") "\n"))
   )
 
-;; (send-rtt-command (concat "*RTT-COM-" client-id "*") "p\n")
-
-;; (shell-command "nrfjprog -i" "*compilation*")
-;; (shell-command "nrfjprog -s 680328666 -r")
-;; (shell-command "nrfjprog -s 680217338 -r")
-;; (shell-command "nrfjprog -s 680387005 -r")
-
-;; (setq server-id "680667429")
-;; (setq client-id "680387005")
-;; (setq provisionee-id "680662336")
-
-;; (setq server-id "680387005")
-;; (setq client-id "680328666")
-;; (setq provisionee-id "680217338")
-;; (setq provisionee-id "680386516")
-
-;; (delete-other-windows)
-
-;; 680662336
-;; 680462258
-;;(start-rtt-buffer "680662336" "c:/Users/ths1/devel/MESH/mesh-btle/build/examples/pb_mesh_server/pb_mesh_server.hex")
-;;(start-rtt-buffer "680462258" "c:/Users/ths1/devel/MESH/mesh-btle/build/examples/pb_mesh_server/pb_mesh_server.hex")
 (defun start-rtt-buffer (segger-id hexfile)
   (interactive "sSegger ID: \nsHexfile: ")
   (start-rtt-com
@@ -93,10 +76,6 @@
   (split-string (shell-command-to-string "nrfjprog -i"))
   )
 
-(dolist (item (split-string (shell-command-to-string "nrfjprog -i")))
-        (message  "Segger ID: %s" item))
-
-
 ;; (start-pb-mesh-server segger-id)
 (setq rtt-com/buffers 'nil)
 (defun kill-rtt-buffers ()
@@ -108,7 +87,7 @@
   )
 ;; (kill-rtt-buffers)
 
-(defun start-pb-mesh-test ()
+(defun start-pb-mesh-test (&optional client server)
   (interactive)
   (if rtt-com/buffers
       (kill-rtt-buffers)
@@ -117,10 +96,10 @@
   (setq it 0)
   (dolist (segger-id rtt-com/segger-ids)
     (when (= it 0)
-      (start-pb-mesh-client segger-id)
+      (start-pb-mesh-client segger-id client)
       (split-window-horizontally))
     (when (> it 0)
-      (start-pb-mesh-server segger-id)
+      (start-pb-mesh-server segger-id server)
       (when (< it (1- (length rtt-com/segger-ids)))
         (split-window-vertically))
       )
@@ -128,8 +107,6 @@
         (progn
           (balance-windows)
           (make-frame)
-          ;; (other-frame 1)
-          ;; (split-window-horizontally)
           )
       (other-window 1)
       )

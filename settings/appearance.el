@@ -4,13 +4,13 @@
       truncate-partial-width-windows nil)
 
 ;; Highlight current line
-(global-hl-line-mode 1)
+(global-hl-line-mode 0)
 
 ;; Set custom theme path
 (setq custom-theme-directory (concat user-emacs-directory "themes"))
 
 (when (eq system-type 'windows-nt)
-  (setq thomsten/presentation-font "Consolas-18")
+  (setq thomsten/presentation-font "Consolas-15")
   ;; (setq thomsten/default-font "-outline-Consolas-normal-normal-normal-*-12-12-*-*-*-*-iso8859-1")
   (setq thomsten/default-font "Consolas-11")
   )
@@ -40,7 +40,7 @@
 
 (defun use-default-theme ()
   (interactive)
-  (use-80s-theme))
+  (use-light-theme))
 
 (defun use-80s-theme ()
   (interactive)
@@ -71,7 +71,7 @@
 (defun use-light-theme ()
   (interactive)
   (disable-theme thomsten/current-theme)
-  (load-theme 'leuven)
+  (load-theme 'sanityinc-tomorrow-day)
   (setq thomsten/current-theme 'leuven)
   (when (boundp 'thomsten/default-font)
     (set-face-attribute 'default nil :font thomsten/default-font)))
@@ -114,17 +114,17 @@
   (blink-cursor-mode -1))
 
 ;; Make zooming affect frame instead of buffers
-(require 'zoom-frm)
+;(require 'zoom-frm)
 
 ;; Unclutter the modeline
-(require 'diminish)
-(eval-after-load "yasnippet" '(diminish 'yas-minor-mode))
-(eval-after-load "eldoc" '(diminish 'eldoc-mode))
-(eval-after-load "paredit" '(diminish 'paredit-mode))
-(eval-after-load "tagedit" '(diminish 'tagedit-mode))
-(eval-after-load "elisp-slime-nav" '(diminish 'elisp-slime-nav-mode))
-(eval-after-load "smartparens" '(diminish 'smartparens-mode))
-(eval-after-load "guide-key" '(diminish 'guide-key-mode))
+;; (require 'diminish)
+;; (eval-after-load "yasnippet" '(diminish 'yas-minor-mode))
+;; (eval-after-load "eldoc" '(diminish 'eldoc-mode))
+;; (eval-after-load "paredit" '(diminish 'paredit-mode))
+;; (eval-after-load "tagedit" '(diminish 'tagedit-mode))
+;; (eval-after-load "elisp-slime-nav" '(diminish 'elisp-slime-nav-mode))
+;; (eval-after-load "smartparens" '(diminish 'smartparens-mode))
+;; (eval-after-load "guide-key" '(diminish 'guide-key-mode))
 
 (defmacro rename-modeline (package-name mode new-name)
   `(eval-after-load ,package-name

@@ -49,8 +49,8 @@
 (setq line-number-mode t)
 (setq column-number-mode t)
 
-;; Lines should be 80 characters wide, not 72
-(setq fill-column 80)
+;; Lines should be 100 characters wide, not 72
+(setq fill-column 100)
 
 ;; Save a list of recent files visited. (open recent file with C-x f)
 (recentf-mode 1)

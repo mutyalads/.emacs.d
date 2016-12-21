@@ -1,8 +1,8 @@
-(defvar nrf-tools/scripts-path "C:/Users/ths1/devel/MESH/mesh-btle/scripts/")
-;; (defvar nrf-tools/mbtle-path   "C:/Users/ths1/devel/MESH/mesh-btle/")
-(defvar nrf-tools/mbtle-path   "c:/Users/ths1/devel/MESH/verification/mod/mbtle/")
-(defvar nrf-tools/s110-softdevice-path "c:/Users/ths1/devel/SDK/SDK_9.0.0_nrf51/components/softdevice/s110/hex/s110_softdevice.hex")
-(defvar nrf-tools/s130-softdevice-path "c:/Users/ths1/devel/SDK/")
+(setq nrf-tools/scripts-path "C:/dev/scripts/")
+(setq nrf-tools/com-port-script "C:/dev/scripts/com/com.py")
+(setq nrf-tools/mbtle-path   "c:/dev/mesh/verification/mod/mbtle/")
+(setq nrf-tools/s110-softdevice-path "c:/dev/mesh/verification/mod/mbtle/lib/softdevice/s110/hex/s110_softdevice.hex")
+(setq nrf-tools/s130-softdevice-path "c:/dev/mesh/verification/mod/mbtle/lib/softdevice/s130/hex/s130_nrf51_2.0.1_softdevice.hex")
 
 (setq nrf-tools/error-code-list
       '("NRF_SUCCESS"
@@ -57,9 +57,30 @@
         "NRF_MESH_EVT_REMOTE_PROV_STATUS: Remote provisioning error. "
         )
       )
+(setq nrf-tools/pb-mesh-server-event-code-list
+      '(
+        "PB_MESH_SERVER_EVENT_SCAN_START"
+        "PB_MESH_SERVER_EVENT_SCAN_START_FILTER"
+        "PB_MESH_SERVER_EVENT_SCAN_CANCEL"
+        "PB_MESH_SERVER_EVENT_SCAN_REPORT_STATUS"
+        "PB_MESH_SERVER_EVENT_LINK_OPEN"
+        "PB_MESH_SERVER_EVENT_LINK_ESTABLISHED"
+        "PB_MESH_SERVER_EVENT_LINK_CLOSE"
+        "PB_MESH_SERVER_EVENT_LINK_CLOSED"
+        "PB_MESH_SERVER_EVENT_LINK_STATUS"
+        "PB_MESH_SERVER_EVENT_UNPROV_UUID"
+        "PB_MESH_SERVER_EVENT_PACKET_TRANSFER"
+        "PB_MESH_SERVER_EVENT_LOCAL_ACK"
+        "PB_MESH_SERVER_EVENT_LOCAL_PACKET"
+        "PB_MESH_SERVER_EVENT_TRANSFER_STATUS"
+        "PB_MESH_SERVER_EVENT_TX_FAILED"
+        )
+      )
 
-(defvar nrf-tools/com-port-script "C:/Users/ths1/devel/scripts/com/com.py")
-
+(defun nrf-tools/pb-mesh-server-event-code-to-string (event-code)
+  (interactive "nEvent code number: ")
+  (message (nth event-code nrf-tools/pb-mesh-server-event-code-list))
+  )
 (defun nrf-tools/error-code-to-string (error-code)
   (interactive "nError code number: ")
   (message (nth error-code nrf-tools/error-code-list))
@@ -97,10 +118,10 @@
   )
 
 
-(setq device-list '("680662336" "680462258"))
-(setq hexfile-list (list (concat nrf-tools/mbtle-path "build/examples/pb_mesh_server/pb_mesh_server_s110.hex")))
-(setq master-device "680667429")
-(setq master-hexfile (concat nrf-tools/mbtle-path "build/examples/serial/serial_s110.hex"))
+;; (setq device-list '("680662336" "680462258"))
+;; (setq hexfile-list (list (concat nrf-tools/mbtle-path "build/examples/pb_mesh_server/pb_mesh_server.hex")))
+;; (setq master-device "680667429")
+;; (setq master-hexfile (concat nrf-tools/mbtle-path "build/examples/serial/serial_s110.hex"))
 
 (defun nrf-tools/multi-device-program (device-list hexfile-list &optional master-device master-hexfile)
   (async-shell-command (concat "python -u "
@@ -115,7 +136,7 @@
 
 (defun nrf-tools/run-interactive-aci ()
   (interactive)
-  (make-comint "InteractiveACI" "python" nil (concat nrf-tools/scripts-path "interactive_pyaci/interactive_console.py") "-d" "COM65")
+  (make-comint "InteractiveACI" "python" nil (concat nrf-tools/mbtle-path "scripts/" "interactive_pyaci/interactive_console.py") "-d" "COM11" "--no-logfile")
   )
 
 (setq nrf-tools/rtt-buffers '())
@@ -133,11 +154,11 @@
 (defun nrf-tools/reset-device ()
   (interactive)
   (defvar reset-device-history 'nil)
-  (if (s-matches? "\\*[a-z_.]*hex:[0-9]*\\*" (buffer-name (current-buffer)))
+  (if (s-matches? "\\*[a-z0-9_.]*hex:[0-9]*\\*" (buffer-name (current-buffer)))
       (setq device (s-left 9 (s-right 10 (buffer-name (current-buffer)))))
     (setq device (completing-read "Device: " (split-string (shell-command-to-string "nrfjprog -i")) nil t nil reset-device-history))
     )
-  (nrf-tools/nrfjprog (concat "-s " device " -r"))
+  (call-process-shell-command (concat "nrfjprog -s " device " -r &") nil 0)
   )
 
 (defun nrf-tools/open-rtt-buffers ()
@@ -182,12 +203,11 @@
   (nrf-tools/open-rtt-buffers)
   )
 
-
 (defun nrf-tools/start-rtt-com ()
   (interactive)
-  (setq segger-list (split-string (shell-command-to-string "nrfjprog -i")))
-  (setq hexfile-list (split-string (shell-command-to-string (concat "c:/cygwin64/bin/find.exe " nrf-tools/mbtle-path "build/" " -iname *.hex"))))
-  (setq segger-argument-list segger-list)
+  (setq segger-list-w-com (split-string (shell-command-to-string "python c:/dev/scripts/jlink_comports_get.py") "\n"))
+  (setq hexfile-list (split-string (shell-command-to-string (concat "C:/MinGW/msys/1.0/bin/find.exe " nrf-tools/mbtle-path "build/" " -iname *.hex"))))
+  (setq segger-argument-list segger-list-w-com)
   (add-to-list 'segger-argument-list "All")
   (setq segger-id (completing-read "SEGGER ID: " segger-argument-list nil t))
   (setq hexfile (completing-read "Hexfile: " hexfile-list nil nil ))
@@ -195,7 +215,7 @@
       (dolist (segger-id segger-list)
         (nrf-tools/start-rtt-buffer segger-id hexfile)
         )
-    (nrf-tools/start-rtt-buffer segger-id hexfile)
+    (nrf-tools/start-rtt-buffer (subseq segger-id 0 9) hexfile)
     )
   ;; (nrf-tools/open-rtt-buffers)
   )

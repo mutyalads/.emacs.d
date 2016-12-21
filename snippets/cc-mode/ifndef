@@ -2,8 +2,6 @@
 # name: ifndef
 # key: ifndef
 # --
-#ifndef ${0:MACRO}
-
-#define ${0:MACRO}
-
+#ifndef ${0}
+#define ${0}
 #endif

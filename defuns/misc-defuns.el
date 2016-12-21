@@ -196,3 +196,21 @@ Both PATTERN and CONTENTS are matched as regular expressions."
   (setq c-hex-string (subseq c-hex-string 0 -2))
   (kill-new c-hex-string)
   )
+
+(defun open-jira-ticket-at-point ()
+  (interactive)
+  (let ((ticket (thing-at-point 'sexp)))
+    (if (eq nil (string-match-p "^[A-z]+-[0-9]+$" ticket))
+        (setq ticket (read-from-minibuffer
+                      "Not sure if this is a ticket: "
+                      ticket)))
+    (browse-url
+     (concat
+      "http://projecttools.nordicsemi.no/jira/browse/" ticket))))
+
+(defun search-jira (string)
+  (interactive "sSearch string: ")
+  (browse-url
+   (concat
+    "http://projecttools.nordicsemi.no/jira/browse/?filter=13340&jql=text ~ " string))
+  )

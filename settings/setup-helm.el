@@ -94,9 +94,4 @@
 
 (helm-mode 1)
 
-
-(add-to-list 'grep-find-ignored-files "*.elf")
-(add-to-list 'grep-find-ignored-files "*.ninja")
-(add-to-list 'grep-find-ignored-files "*.log")
-
 (provide 'setup-helm)

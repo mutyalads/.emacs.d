@@ -8,7 +8,7 @@
 (defun mode-keymap (mode-sym)
   (symbol-value (intern (concat (symbol-name mode-sym) "-map"))))
 
-(defun* buffer-local-set-key (key action)
+(defun buffer-local-set-key (key action)
   (when buffer-local-mode
     (define-key (mode-keymap buffer-local-mode)
       key action)
@@ -96,7 +96,7 @@ Symbols matching the text at point are put first in the completion list."
   (imenu--make-index-alist)
   (let ((name-and-pos '())
         (symbol-names '()))
-    (flet ((addsymbols (symbol-list)
+    (cl-flet ((addsymbols (symbol-list)
                        (when (listp symbol-list)
                          (dolist (symbol symbol-list)
                            (let ((name nil) (position nil))

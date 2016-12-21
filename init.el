@@ -21,14 +21,14 @@
 (setq inhibit-startup-message t)
 
 ;; Set path to dependencies
-(setq site-lisp-dir
-      (expand-file-name "site-lisp" user-emacs-directory))
+;; (setq site-lisp-dir
+;;       (expand-file-name "site-lisp" user-emacs-directory))
 
 (setq settings-dir
       (expand-file-name "settings" user-emacs-directory))
 
 ;; Set up load path
-(add-to-list 'load-path site-lisp-dir)
+;(add-to-list 'load-path site-lisp-dir)
 (add-to-list 'load-path settings-dir)
 
 ;; Keep emacs Custom-settings in separate file
@@ -39,9 +39,9 @@
 (require 'appearance)
 
 ;; Add external projects to load path
-(dolist (project (directory-files site-lisp-dir t "\\w+"))
-  (when (file-directory-p project)
-    (add-to-list 'load-path project)))
+;; (dolist (project (directory-files site-lisp-dir t "\\w+"))
+;;   (when (file-directory-p project)
+;;     (add-to-list 'load-path project)))
 
 ;; Write backup files to own directory
 (setq backup-directory-alist
@@ -97,6 +97,20 @@
      solarized-theme
      org-plus-contrib
      ido-ubiquitous
+     ggtags
+     cmake-project
+     smooth-scrolling
+     undo-tree
+     dired-details
+     find-file-in-project
+     expand-region
+     multiple-cursors
+     jump-char
+     multifiles
+     fill-column-indicator
+     browse-kill-ring
+     smex
+     calfw
      )))
 
 (condition-case nil
@@ -184,10 +198,6 @@
 (require 'multiple-cursors)
 (require 'delsel)
 (require 'jump-char)
-(require 'eproject)
-(require 'wgrep)
-(require 'smart-forward)
-(require 'change-inner)
 (require 'multifiles)
 
 ;; Fill column indicator
@@ -206,7 +216,6 @@
 (require 'key-bindings)
 
 ;; Misc
-(require 'project-archetypes)
 (require 'my-misc)
 (when is-mac (require 'mac))
 ;;(when (eq system-type 'windows-nt) (require 'windows))

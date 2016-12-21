@@ -30,10 +30,10 @@
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
 
-(setq explicit-shell-file-name
-      "C:\\Program Files\\Git\\bin\\sh.exe")
+(when (eq system-type 'windows-nt)
+  (setq explicit-shell-file-name
+        "C:\\Program Files (x86)\\Git\\bin\\sh.exe"))
 (setq shell-file-name explicit-shell-file-name)
-(add-to-list 'exec-path "C:/Program Files/Git/bin")
 
 ;; C-d to kill buffer if process is dead.
 

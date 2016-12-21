@@ -4,16 +4,23 @@
 (require 'ox)
 (require 'ox-confluence)
 
-;; Test github sync
-(mapc 'load
-      '("org-element" "os" "os-bb" "os-github" "os-rmine"))
+;; ;; Test github sync
+;; (mapc 'load
+;;       '("org-element" "os" "os-bb" "os-github" "os-rmine"))
 
-;(add-hook 'org-mode-hook 'turn-on-flyspell 'append)
+(when (eq system-type 'windows-nt)
+  (add-to-list 'exec-path "C:/Program Files (x86)/Aspell/bin/")
+  )
+(setq ispell-program-name "aspell")
+(setq ispell-personal-dictionary "~/.ispell")
+(require 'ispell)
+
+(add-hook 'org-mode-hook 'turn-on-flyspell 'append)
 (add-hook 'org-mode-hook 'visual-line-mode 'append)
 
-(setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "firefox")
-
+;; (setq browse-url-browser-function 'browse-url-generic
+;;       browse-url-generic-program "firefox")
+(setq browse-url-browser-function 'browse-url-default-windows-browser)
 (setq org-latex-listings t)
 
 (setq org-latex-pdf-process
