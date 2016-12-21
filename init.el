@@ -35,9 +35,6 @@
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file)
 
-;; Set up appearance early
-(require 'appearance)
-
 ;; Add external projects to load path
 ;; (dolist (project (directory-files site-lisp-dir t "\\w+"))
 ;;   (when (file-directory-p project)
@@ -63,7 +60,6 @@
 
 ;; Setup packages
 (require 'setup-package)
-
 
 ;; Install extensions if they're missing
 (defun init--install-packages ()
@@ -97,19 +93,27 @@
      solarized-theme
      org-plus-contrib
      ido-ubiquitous
-     ggtags
-     cmake-project
+     zoom-frm
+     dash
+     diminish
      smooth-scrolling
      undo-tree
-     dired-details
+     datomic-snippets
      find-file-in-project
      expand-region
      multiple-cursors
      jump-char
+     eproject
+     wgrep
+     smart-forward
+     change-inner
      multifiles
      fill-column-indicator
      browse-kill-ring
      smex
+     dired-details
+     ggtags
+     cmake-project
      calfw
      )))
 
@@ -118,6 +122,9 @@
   (error
    (package-refresh-contents)
    (init--install-packages)))
+
+;; Set up appearance early
+(require 'appearance)
 
 ;; Lets start with a smattering of sanity
 (require 'sane-defaults)

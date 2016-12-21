@@ -40,7 +40,7 @@
 
 (defun use-default-theme ()
   (interactive)
-  (use-light-theme))
+  (use-default-black-theme))
 
 (defun use-80s-theme ()
   (interactive)
