@@ -62,7 +62,7 @@
   (interactive)
   (save-window-excursion
     (magit-with-refresh
-      (shell-command "git --no-pager commit --amend --reuse-message=HEAD"))))
+     (shell-command "git --no-pager commit --amend --reuse-message=HEAD"))))
 
 (eval-after-load "magit"
   '(define-key magit-status-mode-map (kbd "C-c C-a") 'magit-just-amend))
@@ -139,5 +139,22 @@
 
 (eval-after-load "flyspell"
   '(define-key flyspell-mode-map (kbd "C-.") nil))
+
+(defun is-branch-jira-task (branch-name)
+  (s-matches? "[A-Z]+-[0-9]+" branch-name))
+
+(defun get-jira-task-from-branch (branch-name)
+  (setq match (s-match "[A-Z]+-[0-9]+" branch-name))
+  (if match
+      (nth 0 match)))
+
+(defun magit-add-jira-task-to-commit-hook ()
+  (goto-char (point-min))
+  (if (looking-at-p "[[:space:]]*$")
+      (let ((current-branch (magit-get-current-branch)))
+        (when (is-branch-jira-task current-branch)
+          (insert (get-jira-task-from-branch current-branch) ": ")))))
+
+(add-hook 'git-commit-mode-hook 'magit-add-jira-task-to-commit-hook)
 
 (provide 'setup-magit)
