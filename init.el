@@ -21,24 +21,27 @@
 (setq inhibit-startup-message t)
 
 ;; Set path to dependencies
-;; (setq site-lisp-dir
-;;       (expand-file-name "site-lisp" user-emacs-directory))
+(setq site-lisp-dir
+      (expand-file-name "site-lisp" user-emacs-directory))
 
 (setq settings-dir
       (expand-file-name "settings" user-emacs-directory))
 
 ;; Set up load path
-;(add-to-list 'load-path site-lisp-dir)
+(add-to-list 'load-path site-lisp-dir)
 (add-to-list 'load-path settings-dir)
 
 ;; Keep emacs Custom-settings in separate file
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file)
 
+;; Set up appearance early
+(require 'appearance)
+
 ;; Add external projects to load path
-;; (dolist (project (directory-files site-lisp-dir t "\\w+"))
-;;   (when (file-directory-p project)
-;;     (add-to-list 'load-path project)))
+(dolist (project (directory-files site-lisp-dir t "\\w+"))
+  (when (file-directory-p project)
+    (add-to-list 'load-path project)))
 
 ;; Write backup files to own directory
 (setq backup-directory-alist
@@ -115,6 +118,8 @@
      ggtags
      cmake-project
      calfw
+     markdown-mode
+     elisp-slime-nav
      )))
 
 (condition-case nil
@@ -122,9 +127,6 @@
   (error
    (package-refresh-contents)
    (init--install-packages)))
-
-;; Set up appearance early
-(require 'appearance)
 
 ;; Lets start with a smattering of sanity
 (require 'sane-defaults)
@@ -245,20 +247,23 @@
 
 ;; Package: projejctile
 (require 'projectile)
+(require 'helm-projectile)
 (projectile-global-mode)
 (setq projectile-enable-caching t)
-
-(require 'helm-projectile)
-(helm-projectile-on)
 (setq projectile-completion-system 'helm)
 (setq projectile-indexing-method 'alien)
+(helm-projectile-on)
 
 
 (add-hook 'term-mode-hook (lambda ()
                             (setq yas-dont-activate t)))
+
+
+(require 'setup-compilation)
+
 ;; Elisp go-to-definition with M-. and back again with M-,
-;(autoload 'elisp-slime-nav-mode "elisp-slime-nav")
-;(add-hook 'emacs-lisp-mode-hook (lambda () (elisp-slime-nav-mode t) (eldoc-mode 1)))
+(autoload 'elisp-slime-nav-mode "elisp-slime-nav")
+(add-hook 'emacs-lisp-mode-hook (lambda () (elisp-slime-nav-mode t) (eldoc-mode 1)))
 
 ;; Emacs server
 (require 'server)
@@ -267,6 +272,9 @@
 
 ;; Setup Calendar
 (require 'setup-calendar)
+
+;; CMake
+(setq cmake-tab-width 4)
 
 ;; Run at full power please
 (put 'downcase-region 'disabled nil)
