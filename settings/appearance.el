@@ -4,21 +4,20 @@
       truncate-partial-width-windows nil)
 
 ;; Highlight current line
-(global-hl-line-mode 0)
+(global-hl-line-mode 1)
 
 ;; Set custom theme path
 (setq custom-theme-directory (concat user-emacs-directory "themes"))
 
 (when (eq system-type 'windows-nt)
   (setq thomsten/presentation-font "Consolas-15")
-  ;; (setq thomsten/default-font "-outline-Consolas-normal-normal-normal-*-12-12-*-*-*-*-iso8859-1")
   (setq thomsten/default-font "Consolas-11")
   )
 
 (when (eq system-type 'gnu/linux)
-    (setq thomsten/presentation-font "-unknown-Ubuntu Mono-normal-normal-normal-*-22-*-*-*-*-*-iso8859-1")
-    (setq thomsten/default-font "-unknown-Ubuntu Mono-normal-normal-normal-*-13-*-*-*-*-*-iso8859-1")
-    )
+  (setq thomsten/presentation-font "-unknown-Ubuntu Mono-normal-normal-normal-*-22-*-*-*-*-*-iso8859-1")
+  (setq thomsten/default-font "-PfEd-Inconsolata-normal-normal-normal-*-15-*-*-*-m-0-iso10646-1")
+  )
 
 (dolist
     (path (directory-files custom-theme-directory t "\\w+"))
@@ -26,8 +25,7 @@
     (add-to-list 'custom-theme-load-path path)))
 
 (setq thomsten/current-theme nil)
-
-;; (set-face-attribute 'default nil :font thomsten/default-font)
+(set-face-attribute 'default nil :font thomsten/default-font)
 
 ;; Default theme
 (defun use-presentation-theme ()

@@ -8,8 +8,8 @@ projectile.cache
 /request
 /semanticdb
 /server
-
 \#*
 .\#*
 /ede-projects.el
 /.mc-lists.el
+/.places

@@ -18,15 +18,20 @@
 (add-hook 'org-mode-hook 'turn-on-flyspell 'append)
 (add-hook 'org-mode-hook 'visual-line-mode 'append)
 
-;; (setq browse-url-browser-function 'browse-url-generic
-;;       browse-url-generic-program "firefox")
-(setq browse-url-browser-function 'browse-url-default-windows-browser)
+(setq browse-url-browser-function 'browse-url-generic)
+
 (setq org-latex-listings t)
 
 (setq org-latex-pdf-process
       '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+'(org-file-apps
+  (quote
+   ((auto-mode . emacs)
+    ("\\.mm\\'" . default)
+    ("\\.x?html?\\'" . "midori %s")
+    ("\\.pdf\\'" . default))))
 
 (defun myorg-update-parent-cookie ()
   (when (equal major-mode 'org-mode)
@@ -61,7 +66,7 @@
                "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
               ("n" "note" entry (file "~/org/refile.org")
                "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t)
-              ("j" "Journal" entry (file+datetree "~/git/org/diary.org")
+              ("j" "Journal" entry (file+datetree "~/Dropbox/org/diary.org")
                "* %?\n%U\n" :clock-in t :clock-resume t)
               ("w" "org-protocol" entry (file "~/org/refile.org")
                "* TODO Review %c\n%U\n" :immediate-finish t)
@@ -82,7 +87,7 @@
 (add-hook 'org-clock-out-hook 'bh/remove-empty-drawer-on-clock-out 'append)
 
 (setq org-todo-keywords
-      (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+      (quote ((sequence "TODO(t)" "NEXT(n)" "REVIEW(r)" "|" "DONE(d)")
               (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
 
 (setq org-todo-keyword-faces
@@ -90,6 +95,7 @@
               ("NEXT" :foreground "blue" :weight bold)
               ("DONE" :foreground "forest green" :weight bold)
               ("WAITING" :foreground "orange" :weight bold)
+              ("REVIEW" :foreground "orange" :weight bold)
               ("HOLD" :foreground "magenta" :weight bold)
               ("CANCELLED" :foreground "forest green" :weight bold)
               ("MEETING" :foreground "forest green" :weight bold)
@@ -100,6 +106,7 @@
               ("WAITING" ("WAITING" . t))
               ("HOLD" ("WAITING") ("HOLD" . t))
               (done ("WAITING") ("HOLD"))
+              ("REVIEW" ("WAITING") ("CANCELLED") ("HOLD"))
               ("TODO" ("WAITING") ("CANCELLED") ("HOLD"))
               ("NEXT" ("WAITING") ("CANCELLED") ("HOLD"))
               ("DONE" ("WAITING") ("CANCELLED") ("HOLD")))))
