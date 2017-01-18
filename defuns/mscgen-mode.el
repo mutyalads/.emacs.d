@@ -4,7 +4,7 @@
 ;;
 ;; Blindly based on: https://github.com/josteink/mscgen-mode/blob/master/mscgen-mode.el
 (defvar mscgen-indent-width 4 "Identation level")
-
+(defvar mscgen-font "Inconsolata" "Font used for rendering")
 (defun mscgen-indent-get ()
   "Indent current line of mscgen code."
   (beginning-of-line)
@@ -114,6 +114,7 @@
   (setq return
         (call-process
          "mscgen" 'nil 'nil 'nil
+         "-F" mscgen-font
          "-Tpng" "-i" (buffer-name) "-o" (concat "png/" (substring (buffer-name) 0 -4) ".png"))
          )
   (if (> return 0)
@@ -123,7 +124,11 @@
 
 (defun mscgen-insert-label ()
   (interactive)
-  (end-of-line)
+  (if (not (looking-at-p ".*;"))
+      (end-of-line)
+    (end-of-line)
+    (delete-char -1)
+    )
   (insert "[label=\"\"];")
   (backward-char 3)
   )
