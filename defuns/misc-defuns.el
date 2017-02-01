@@ -214,3 +214,11 @@ Both PATTERN and CONTENTS are matched as regular expressions."
    (concat
     "http://projecttools.nordicsemi.no/jira/browse/?filter=13340&jql=text ~ " string))
   )
+
+(defun clone-new-lisp-project (url)
+  "Clones new Git lisp repo to the site-lisp directory."
+  (interactive "sGit URL: ")
+  (async-shell-command (concat "cd " site-lisp-dir " && git clone " url))
+  (dolist (project (directory-files site-lisp-dir t "\\w+"))
+    (when (file-directory-p project)
+      (add-to-list 'load-path project))))

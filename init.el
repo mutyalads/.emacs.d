@@ -120,6 +120,11 @@
      calfw
      markdown-mode
      elisp-slime-nav
+     cmake-mode
+     ox-gfm
+     ox-asciidoc
+     ox-jira
+     color-theme-sanityinc-tomorrow
      )))
 
 (condition-case nil

@@ -6,7 +6,7 @@
 projectile-bookmarks.eld
 projectile.cache
 /request
-/semanticdb
+/semanticdb/**
 /server
 \#*
 .\#*
