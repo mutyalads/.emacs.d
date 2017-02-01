@@ -1,5 +1,5 @@
 (require 'package)
-(require 'dash)
+
 ;; Add melpa to package repos
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
@@ -14,9 +14,9 @@
 
 
 (defun packages-install (packages)
-  (--each packages
-    (when (not (package-installed-p it))
-      (package-install it)))
+  (dolist (package packages)
+    (when (not (package-installed-p package))
+      (package-install package)))
   (delete-other-windows))
 
 ;;; On-demand installation of packages
