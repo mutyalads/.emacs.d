@@ -5,35 +5,33 @@
 
 ;; bash-completion
 
-(when (not (eq system-type 'windows-nt))
-  (autoload 'bash-completion-dynamic-complete
-    "bash-completion"
-    "BASH completion hook")
-  (add-hook 'shell-dynamic-complete-functions
-            'bash-completion-dynamic-complete)
-  (add-hook 'shell-command-complete-functions
-            'bash-completion-dynamic-complete)
-  )
-;; tab-completion for shell-command
-;; (require 'shell-command)
-;; (shell-command-completion-mode)
-;; (require 'bash-completion)
-;; (bash-completion-setup)
+;; (when (not (eq system-type 'windows-nt))
+;;   (autoload 'bash-completion-dynamic-complete
+;;     "bash-completion"
+;;     "BASH completion hook")
+;;   (add-hook 'shell-dynamic-complete-functions
+;;             'bash-completion-dynamic-complete)
+;;   (add-hook 'shell-command-complete-functions
+;;             'bash-completion-dynamic-complete))
+
+(require 'setup-multi-term)
 
 (eval-after-load "shell"
   '(define-key shell-mode-map (kbd "TAB") #'company-complete))
 (add-hook 'shell-mode-hook #'company-mode)
 
-;; (setq ansi-color-names-vector
-;;       ["black" "red" "green" "yellow" "PaleBlue" "magenta" "cyan" "white"])
-
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
 
-(if (eq system-type 'windows-nt)
-    (setq explicit-shell-file-name
-          "C:\\Program Files\\Git\\bin\\sh.exe")
-  (setq explicit-shell-file-name "/bin/bash"))
+
+(cond
+ ((eq system-type 'windows-nt)
+  (setq explicit-shell-file-name
+        "C:\\Program Files\\Git\\bin\\sh.exe"))
+ ((eq system-type 'gnu/linux)
+  (setq explicit-shell-file-name "/usr/bin/zsh"))
+ (t (setq explicit-shell-file-name "/usr/bin/sh")))
+
 (setq shell-file-name explicit-shell-file-name)
 
 ;; C-d to kill buffer if process is dead.
