@@ -16,8 +16,7 @@
 
 (when (eq system-type 'gnu/linux)
   (setq thomsten/presentation-font "-unknown-Ubuntu Mono-normal-normal-normal-*-22-*-*-*-*-*-iso8859-1")
-  (setq thomsten/default-font "-PfEd-Inconsolata-normal-normal-normal-*-15-*-*-*-m-0-iso10646-1")
-  )
+  (setq thomsten/default-font "-PfEd-Inconsolata-normal-normal-normal-*-15-*-*-*-m-0-iso10646-1"))
 
 (dolist
     (path (directory-files custom-theme-directory t "\\w+"))
@@ -30,15 +29,13 @@
 ;; Default theme
 (defun use-presentation-theme ()
   (interactive)
-  (disable-theme thomsten/current-theme)
-  (load-theme 'leuven)
-  (setq thomsten/current-theme 'leuven)
+  (color-theme-sanityinc-tomorrow-day)
   (when (boundp 'thomsten/presentation-font)
     (set-face-attribute 'default nil :font thomsten/presentation-font)))
 
 (defun use-default-theme ()
   (interactive)
-  (use-default-black-theme))
+  (color-theme-sanityinc-tomorrow-eighties))
 
 (defun use-80s-theme ()
   (interactive)
@@ -115,14 +112,28 @@
 ;(require 'zoom-frm)
 
 ;; Unclutter the modeline
-;; (require 'diminish)
-;; (eval-after-load "yasnippet" '(diminish 'yas-minor-mode))
-;; (eval-after-load "eldoc" '(diminish 'eldoc-mode))
-;; (eval-after-load "paredit" '(diminish 'paredit-mode))
-;; (eval-after-load "tagedit" '(diminish 'tagedit-mode))
-;; (eval-after-load "elisp-slime-nav" '(diminish 'elisp-slime-nav-mode))
-;; (eval-after-load "smartparens" '(diminish 'smartparens-mode))
-;; (eval-after-load "guide-key" '(diminish 'guide-key-mode))
+(require 'diminish)
+
+(eval-after-load "yasnippet" '(diminish 'yas-minor-mode))
+(eval-after-load "eldoc" '(diminish 'eldoc-mode))
+(eval-after-load "paredit" '(diminish 'paredit-mode))
+(eval-after-load "tagedit" '(diminish 'tagedit-mode))
+(eval-after-load "elisp-slime-nav" '(diminish 'elisp-slime-nav-mode))
+(eval-after-load "smartparens" '(diminish 'smartparens-mode))
+(eval-after-load "guide-key" '(diminish 'guide-key-mode))
+(eval-after-load "projectile" '(diminish 'projectile-mode))
+(eval-after-load "company" '(diminish 'company-mode))
+(eval-after-load "helm-gtags" '(diminish 'helm-gtags-mode))
+(eval-after-load "helm" '(diminish 'helm-mode))
+(eval-after-load "abbrev" '(diminish 'abbrev-mode))
+(eval-after-load "whitespace-cleanup-mode" '(diminish 'whitespace-cleanup-mode))
+(eval-after-load "smartparens" '(diminish 'smartparens-mode))
+(eval-after-load "subword" '(diminish 'subword-mode))
+(eval-after-load "autorevert" '(diminish 'auto-revert-mode))
+(eval-after-load "simple" '(diminish 'auto-fill-function))
+(display-time)
+
+
 
 (defmacro rename-modeline (package-name mode new-name)
   `(eval-after-load ,package-name
