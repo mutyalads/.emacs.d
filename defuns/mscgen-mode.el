@@ -115,7 +115,7 @@
         (call-process
          "mscgen" 'nil 'nil 'nil
          "-F" mscgen-font
-         "-Tpng" "-i" (buffer-name) "-o" (concat "png/" (substring (buffer-name) 0 -4) ".png"))
+         "-Tpng" "-i" (buffer-name) "-o" (concat (substring (buffer-name) 0 -4) ".png"))
          )
   (if (> return 0)
     (message "Error \"%d\" rendering MSC..." return)
