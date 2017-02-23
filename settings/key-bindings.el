@@ -358,5 +358,12 @@
 
 
 (global-set-key (kbd "<f5>") 'recompile)
+(global-set-key (kbd "C-c C-<left>") 'hs-hide-block)
+(global-set-key (kbd "C-c C-<right>") 'hs-show-block)
+(global-set-key (kbd "C-c C-<down>") 'hs-hide-all)
+(global-set-key (kbd "C-c C-<up>") 'hs-show-all)
+
+(global-set-key (kbd "C-c C-.") 'next-error)
+(global-set-key (kbd "C-c C-,") 'previous-error)
 
 (provide 'key-bindings)
