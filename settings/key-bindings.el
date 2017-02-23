@@ -111,7 +111,13 @@
 (global-set-key (kbd "M-W") (λ (save-region-or-current-line 1)))
 
 ;; Make shell more convenient, and suspend-frame less
-(global-set-key (kbd "C-z") 'shell)
+(defun open-term ()
+  (interactive)
+  (setq term-buf (get-buffer (concat "*" multi-term-buffer-name "<1>*")))
+  (if term-buf
+      (multi-term-next)
+    (multi-term)))
+(global-set-key (kbd "C-z") 'open-term)
 (global-set-key (kbd "C-x M-z") 'suspend-frame)
 
 ;; Zap to char
