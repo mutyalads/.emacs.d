@@ -125,6 +125,7 @@
      ox-asciidoc
      ox-jira
      color-theme-sanityinc-tomorrow
+     framemove
      )))
 
 (condition-case nil
@@ -280,6 +281,10 @@
 
 ;; CMake
 (setq cmake-tab-width 4)
+
+(require 'windmove)
+(require 'framemove)
+(setq framemove-hook-into-windmove t)
 
 ;; Run at full power please
 (put 'downcase-region 'disabled nil)
