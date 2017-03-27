@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Function documentation
+# key: fdox
+# --
+/**
+ * $0
+ */

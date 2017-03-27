@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: defgroup
+# key: defgroup
+# --
+/**
+ * @defgroup $1 $2
+ * @{
+ */
+
+$0
+
+/** @} end of $1 */
