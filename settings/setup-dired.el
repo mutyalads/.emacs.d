@@ -25,11 +25,11 @@
 (define-key dired-mode-map (kbd "C-a") 'dired-back-to-start-of-files)
 (define-key dired-mode-map (kbd "k") 'dired-do-delete)
 
-;; M-up is nicer in dired if it moves to the fourth line - the first file
+;; M-up is nicer in dired if it moves to the third line - the first file
 (defun dired-back-to-top ()
   (interactive)
   (beginning-of-buffer)
-  (dired-next-line 4))
+  (dired-next-line 3))
 
 (define-key dired-mode-map (vector 'remap 'beginning-of-buffer) 'dired-back-to-top)
 (define-key dired-mode-map (vector 'remap 'smart-up) 'dired-back-to-top)

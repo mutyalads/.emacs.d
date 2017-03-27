@@ -4,6 +4,7 @@
 (require 'ox)
 (require 'ox-confluence)
 
+
 ;; ;; Test github sync
 ;; (mapc 'load
 ;;       '("org-element" "os" "os-bb" "os-github" "os-rmine"))
@@ -54,13 +55,13 @@
 (setq org-startup-indented 1)
 
 
-(setq org-directory "~/devel/mesh/org")
+(setq org-directory "~/org")
 (setq org-default-notes-file (concat org-directory "/notes.org"))
 (define-key global-map (kbd "C-c h") 'org-capture) ; "org husk"
 
 ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
 (setq org-capture-templates
-      (quote (("t" "todo" entry (file "~/org/refile.org")
+      (quote (("t" "todo" entry (file (concat org-directory "/refile.org"))
                "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
               ("r" "respond" entry (file "~/org/refile.org")
                "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
@@ -88,7 +89,8 @@
 
 (setq org-todo-keywords
       (quote ((sequence "TODO(t)" "NEXT(n)" "REVIEW(r)" "|" "DONE(d)")
-              (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
+              (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" )
+              (sequence "PHONE" "MEETING"))))
 
 (setq org-todo-keyword-faces
       (quote (("TODO" :foreground "red" :weight bold)
@@ -111,6 +113,53 @@
               ("NEXT" ("WAITING") ("CANCELLED") ("HOLD"))
               ("DONE" ("WAITING") ("CANCELLED") ("HOLD")))))
 
-(setq org-agenda-files (list "~/devel/mesh/org/"))
+(setq org-agenda-files (list org-directory
+                             (concat org-directory "/mesh")))
+(defun thomsten/org-begin-type (str)
+  (insert (concat "#+BEGIN_" str "\n\n" "#+END_" str))
+  (forward-line -1))
+
+(defun thomsten/org-begin-quote ()
+  (interactive)
+  (thomsten/org-begin-type "QUOTE"))
+
+(defun thomsten/org-begin-src ()
+  (interactive)
+  (thomsten/org-begin-type "SRC"))
+
+
+;; Using visual notifications :)
+;; Requires mplayer
+(require 'notify-popup)
+(setq
+ appt-message-warning-time 15 ;; warn 15 min in advance
+ appt-display-mode-line t     ;; show in the modeline
+ appt-display-format 'window) ;; use our func
+(appt-activate 1)              ;; active appt (appointment notification)
+(display-time)                 ;; time display is required for this...
+
+;; update appt each time agenda opened
+(add-hook 'org-finalize-agenda-hook 'org-agenda-to-appt)
+
+(defun appt-display (min-to-app new-time msg)
+  (notify-popup (format "Appointment in %s minute(s)" min-to-app) msg
+                "face-monkey"))
+(setq appt-disp-window-function (function appt-display))
+(defun appt-delete ())
+(setq appt-delete-window-function (function appt-delete))
+
+;; '(org-agenda-sorting-strategy
+;;   (quote
+;;    ((agenda time-up habit-down priority-down category-keep) ;; this was originally: (agenda habit-down time-up priority-down category-keep)
+;;     (todo priority-down category-keep)
+;;     (tags priority-down category-keep)
+;;     (search category-keep))))
+
+(setq org-journal-dir (concat org-directory "/personal/journal"))
+(setq org-journal-file-format "journal_%Y_%m_%d.org")
+(setq org-journal-enable-encryption 't)
+(require 'org-crypt)
+(require 'org-journal)
 
 (provide 'setup-org)
+

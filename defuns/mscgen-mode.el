@@ -113,7 +113,7 @@
   (save-buffer)
   (setq return
         (call-process
-         "mscgen" 'nil 'nil 'nil
+         "mscgen" 'nil "*mscgen-output*" t
          "-F" mscgen-font
          "-Tpng" "-i" (buffer-name) "-o" (concat (substring (buffer-name) 0 -4) ".png"))
          )

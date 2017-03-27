@@ -10,7 +10,6 @@
 (define-key ggtags-mode-map (kbd "C-c g f") 'ggtags-find-file)
 (define-key ggtags-mode-map (kbd "C-c g c") 'ggtags-create-tags)
 (define-key ggtags-mode-map (kbd "C-c g u") 'ggtags-update-tags)
-
 (define-key ggtags-mode-map (kbd "M-,") 'pop-tag-mark)
 
 (provide 'setup-ggtags)
